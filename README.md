@@ -100,7 +100,7 @@ A Flask-based API that scrapes basketball player statistics from [Basketball Ref
         ]
     },
     "year": "Current Year"
-}
+}'''
 
 
 **Example Request**: `GET http://127.0.0.1:5000/player-splits-stats?player=LeBron%20James&year=2022`
@@ -151,7 +151,7 @@ A Flask-based API that scrapes basketball player statistics from [Basketball Ref
             }
         }
     }
-}
+}'''
 
    **Screenshots**:
    ![Screenshot 2024-11-24 155319](https://github.com/user-attachments/assets/981c7050-c05d-4f0a-93ce-b5baff357787)
