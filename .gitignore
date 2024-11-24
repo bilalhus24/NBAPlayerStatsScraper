@@ -1,0 +1,45 @@
+# Python bytecode
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual environments
+venv/
+env/
+
+# Environment variables
+.env
+
+# IDE files
+*.idea/
+.vscode/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Flask cache and sessions
+instance/
+*.sqlite3
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+*.coverage
+
+# Python egg metadata
+*.egg-info/
+dist/
+build/
+
+# Miscellaneous
+*.bak
+*.swp
+*.swo
+
