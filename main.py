@@ -47,7 +47,6 @@ def scrape_player_stats_by_name(player_name):
                     career_value = values[1].get_text(strip=True)
                     ordered_stats.append({"label": label, "season": season_value, "career": career_value})
 
-        # Return stats in the parsed order
         return {
             "stats": ordered_stats
         }
@@ -55,107 +54,6 @@ def scrape_player_stats_by_name(player_name):
     except Exception as e:
         print(f"Error occurred while fetching stats by name: {e}")
         return {"error": "An error occurred while fetching player stats by name."}
-
-
-# def scrape_player_stats_by_name_and_year(player_name, year):
-#     try:
-#         parts = player_name.split()
-#
-#         last_name = parts[-1].lower()
-#         first_name = parts[0].lower()
-#         first_letter = last_name[0]
-#         player_url = f"{PLAYER_BASE_URL}{first_letter}/{last_name[:5]}{first_name[:2]}01/splits/{year}"
-#
-#         response = requests.get(player_url)
-#
-#         soup = BeautifulSoup(response.content, 'html.parser')
-#         table = soup.find('table', id='splits')
-#         if not table:
-#             return {"error": "Splits stats table not found on the page."}
-#
-#         headers = [th.get_text(strip=True) for th in table.find('thead').find_all('th')]
-#
-#         # Extract data for the first row in tbody
-#         first_data_row = table.find('tbody').find('tr')
-#         if not first_data_row:
-#             return {"error": "No data rows found in the table."}
-#         data = [td.get_text(strip=True) for td in first_data_row.find_all(['th', 'td'])]
-#
-#         data = [value for value in data if value]
-#         data = data[1:]
-#         headers = [header for header in headers if header]
-#         main_headers = headers[:4]
-#         headers = headers[6:]
-#
-#         stats_dict = {main_header: {} for main_header in main_headers}
-#         in_each = [17,3,5,4]
-#         for i in range(len(in_each)):
-#             value = in_each[i]
-#             for j in range(value):
-#
-#
-#         # Construct the result
-#         return {
-#             "headers": headers,
-#             "data": data,
-#             "stats_dict": stats_dict
-#         }
-#
-#     except Exception as e:
-#         print(f"Error: {e}")
-#         return {"error": "An error occurred while fetching player stats by name and year."}
-
-# def scrape_player_stats_by_name_and_year(player_name, year):
-#     try:
-#         parts = player_name.split()
-#
-#         last_name = parts[-1].lower()
-#         first_name = parts[0].lower()
-#         first_letter = last_name[0]
-#         player_url = f"{PLAYER_BASE_URL}{first_letter}/{last_name[:5]}{first_name[:2]}01/splits/{year}"
-#
-#         response = requests.get(player_url)
-#
-#         soup = BeautifulSoup(response.content, 'html.parser')
-#         table = soup.find('table', id='splits')
-#         if not table:
-#             return {"error": "Splits stats table not found on the page."}
-#
-#         # Extract headers
-#         headers = [th.get_text(strip=True) for th in table.find('thead').find_all('th')]
-#
-#         # Extract data for the first row in tbody
-#         first_data_row = table.find('tbody').find('tr')
-#         if not first_data_row:
-#             return {"error": "No data rows found in the table."}
-#         data = [td.get_text(strip=True) for td in first_data_row.find_all(['th', 'td'])]
-#
-#         # Clean data and headers
-#         data = [value for value in data if value][1:]  # Remove "Total" and the first entry
-#         headers = [header for header in headers if header]
-#         headers = headers[6:]  # Exclude the 5th and 6th headers
-#
-#         # Define group sizes for each category
-#         in_each = [17, 4, 4, 4]  # Totals, Shooting, Advanced, Per Game
-#         categories = ["Totals", "Shooting", "Advanced", "Per Game"]
-#
-#         # Create stats dictionary
-#         stats_dict = {}
-#         data_index = 0
-#         for i, category in enumerate(categories):
-#             group_size = in_each[i]
-#             stats_dict[category] = {headers[data_index + j]: data[data_index + j] for j in range(group_size)}
-#             data_index += group_size
-#
-#         # Construct the result
-#         return {
-#             "url": player_url,
-#             "stats": stats_dict
-#         }
-#
-#     except Exception as e:
-#         print(f"Error: {e}")
-#         return {"error": "An error occurred while fetching player stats by name and year."}
 
 def scrape_player_stats_by_name_and_year(player_name, year):
     try:
@@ -173,25 +71,20 @@ def scrape_player_stats_by_name_and_year(player_name, year):
         if not table:
             return {"error": "Splits stats table not found on the page."}
 
-        # Extract headers
         headers = [th.get_text(strip=True) for th in table.find('thead').find_all('th')]
 
-        # Extract data for the first row in tbody
         first_data_row = table.find('tbody').find('tr')
         if not first_data_row:
             return {"error": "No data rows found in the table."}
         data = [td.get_text(strip=True) for td in first_data_row.find_all(['th', 'td'])]
 
-        # Clean data and headers
         data = [value for value in data if value][1:]  # Remove "Total" and the first entry
         headers = [header for header in headers if header]
         headers = headers[6:]  # Remove unnecessary headers (5th and 6th)
 
-        # Define group sizes and categories
         in_each = [17, 4, 4, 4]  # Totals, Shooting, Advanced, Per Game
         categories = ["Totals", "Shooting", "Advanced", "Per Game"]
 
-        # Build stats_dict as an OrderedDict
         stats_dict = OrderedDict()
         data_index = 0
         for i, category in enumerate(categories):
@@ -201,7 +94,6 @@ def scrape_player_stats_by_name_and_year(player_name, year):
             )
             data_index += group_size
 
-        # Construct the result
         return OrderedDict({
             "stats": OrderedDict({
                 "stats": stats_dict
